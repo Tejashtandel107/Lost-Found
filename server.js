@@ -10,7 +10,6 @@ const app = fastify({ logger: true });
 // plugins
 app.register(cors, { origin: '*', methods: ['GET', 'POST', 'PUT', 'DELETE'] });
 app.register(multipart); 
-
 app.register(dbConnector);
 app.register(routes, { prefix: '/api' });
 
