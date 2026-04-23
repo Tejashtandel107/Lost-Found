@@ -3,7 +3,6 @@ import bcrypt from 'bcrypt';
 import User from './model.js';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
-import transporter from '../../config/mail.js';
 
 export default class AuthService {
   async register(body) {

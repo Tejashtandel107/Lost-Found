@@ -3,26 +3,21 @@ import 'dotenv/config';
 import cors from '@fastify/cors';
 import dbConnector from './config/db.js';
 import routes from './routes/route.js';
-import path from 'path';
 import multipart from '@fastify/multipart';
-import fastifyStatic from '@fastify/static';
 
 const app = fastify({ logger: true });
 
 // plugins
 app.register(cors, { origin: '*', methods: ['GET', 'POST', 'PUT', 'DELETE'] });
 app.register(multipart); 
-app.register(fastifyStatic, {
-  root: path.join(process.cwd(), 'uploads'),
-  prefix: '/uploads/'
-});
+
 app.register(dbConnector);
-app.register(routes,{ prefix: '/api' });
+app.register(routes, { prefix: '/api' });
 
 const start = async () => {
   try {
     const PORT = process.env.PORT || 3000;
-    await app.listen({ port: PORT,host: '0.0.0.0' });
+    await app.listen({ port: PORT, host: '0.0.0.0' });
     console.log(`Server running on port ${PORT}`);
   } catch (err) {
     app.log.error(err);
