@@ -7,14 +7,21 @@ dotenv.config();
 async function connectDB(fastify, options) {
   try {
     console.log('🔗 Connecting to MongoDB...');
-    console.log(`🔗 Connection string: ${process.env.MONGODB_STRING}`);
 
-    await mongoose.connect(process.env.MONGODB_STRING);
+    await mongoose.connect(process.env.MONGODB_STRING, {
+      serverSelectionTimeoutMS: 5000
+    });
 
     console.log('✅ MongoDB connected with Mongoose');
   } catch (err) {
-    console.error('❌ MongoDB connection error:', err);
-    process.exit(1);
+    console.error('❌ MongoDB connection error:');
+    console.error(err.message);   // 👈 important
+    console.error(err.stack);     // 👈 important
+
+    // ❌ REMOVE this (for debugging)
+    // process.exit(1);
+
+    throw err; // ✅ let Fastify show proper error
   }
 }
 
