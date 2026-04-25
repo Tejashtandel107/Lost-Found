@@ -131,7 +131,7 @@ export const updateItemSchema = {
         description: { type: 'string', minLength: 10 },
         location: { type: 'string', minLength: 3 },
         name: { type: 'string', minLength: 3 },
-        contactNumber: { type: 'string', pattern: '^[6-9][0-9]{9}$' },
+        contactNumber: { type: 'string', minLength: 10 },
         email: { type: 'string', format: 'email' },
         image: { type: 'string' }
       }
