@@ -15,6 +15,15 @@ export default async function itemRoutes(app, options) {
     }
   });
 
+  app.post('/update-report-item',  { preHandler: verifyToken }, async (req, reply) => {
+    try {
+      const result = await service.report(req.body.itemId,req.user.userId);
+      reply.code(201).send({ status: true, data: result });
+    } catch (err) {
+      reply.code(400).send({ status: false, message: err.message });
+    }
+  });
+
   app.get('/', getItemsSchema, async (req, reply) => {
     try {
       const result = await service.getItems(req.query);

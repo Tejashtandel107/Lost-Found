@@ -5,6 +5,13 @@ export default class ItemService {
     return await Item.create(body);
   }
 
+  async report(id,user) {
+    return await Item.findByIdAndUpdate(id, 
+      { $set: { reportedBy: user } },
+      {returnDocument: 'after'}
+    )
+  }
+
   async getItems(query) {
     const { page = 1, limit = 10, search = '', type, dateFilter } = query;
 
@@ -52,6 +59,7 @@ export default class ItemService {
 
     const [items, total] = await Promise.all([
       Item.find(filter)
+        .populate('reportedBy', 'name email contactNumber')
         .sort({ dateFound: -1 })
         .skip(skip)
         .limit(parseInt(limit)),
@@ -68,7 +76,6 @@ export default class ItemService {
       }
     };
   }
-
   
   async getItemById(id) {
     const item = await Item.findById(id);

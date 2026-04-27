@@ -37,11 +37,11 @@ export const reportItemSchema = {
         },
         name: {
           type: 'string',
-          minLength: 3
+          minLength: 2
         },
         contactNumber: {
           type: 'string',
-          pattern: '^[6-9][0-9]{9}$'
+          minLength: 10
         },
         email: {
           type: 'string',
@@ -112,17 +112,6 @@ export const updateItemSchema = {
     },
     body: {
       type: 'object',
-      required: [
-        'type',
-        'itemTitle',
-        'dateFound',
-        'description',
-        'location',
-        'name',
-        'contactNumber',
-        'email',
-        'image'
-      ],
       additionalProperties: false,
       properties: {
         type: { type: 'string', enum: ['lost', 'found', 'claim'] },
@@ -130,10 +119,11 @@ export const updateItemSchema = {
         dateFound: { type: 'string', format: 'date' },
         description: { type: 'string', minLength: 10 },
         location: { type: 'string', minLength: 3 },
-        name: { type: 'string', minLength: 3 },
+        name: { type: 'string', minLength: 2 },
         contactNumber: { type: 'string', minLength: 10 },
         email: { type: 'string', format: 'email' },
-        image: { type: 'string' }
+        image: { type: 'string' },
+        find: { type: 'boolean' }
       }
     }
   }
