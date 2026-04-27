@@ -50,6 +50,16 @@ const itemSchema = new mongoose.Schema(
     image: {
       type: String,
       required: true 
+    },
+
+    find:{
+      type:Boolean,
+      default:false
+    },
+
+    reportedBy:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
     }
   },
   { timestamps: true }
