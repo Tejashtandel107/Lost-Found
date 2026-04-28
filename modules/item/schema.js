@@ -143,3 +143,19 @@ export const deleteItemSchema = {
     }
   }
 };
+
+export const updateReportItemSchema = {
+  schema: {
+    body: {
+      type: "object",
+      required: ["itemId"],
+      additionalProperties: false,
+      properties: {
+        itemId: {
+          type: "string",
+          pattern: "^[a-fA-F0-9]{24}$", 
+        },
+      },
+    },
+  },
+};

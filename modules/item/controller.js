@@ -1,5 +1,5 @@
 import ItemService from './service.js';
-import { reportItemSchema, getItemsSchema,getItemByIdSchema,updateItemSchema,deleteItemSchema } 
+import { reportItemSchema, getItemsSchema,getItemByIdSchema,updateItemSchema,deleteItemSchema,updateReportItemSchema } 
 from './schema.js';
 import { verifyToken } from '../../middleware/auth.js';
 
@@ -15,7 +15,7 @@ export default async function itemRoutes(app, options) {
     }
   });
 
-  app.post('/update-report-item',  { preHandler: verifyToken }, async (req, reply) => {
+  app.post('/update-report-item', { preHandler: verifyToken, ...updateReportItemSchema }, async (req, reply) => {
     try {
       const result = await service.report(req.body.itemId,req.user.userId);
       reply.code(201).send({ status: true, data: result });
@@ -45,7 +45,7 @@ export default async function itemRoutes(app, options) {
     }
   });
 
-  app.put('/:id',updateItemSchema,async (req, reply) => {
+  app.put('/:id',{ preHandler: verifyToken, ...updateItemSchema },async (req, reply) => {
     try {
       const result = await service.updateItem(req.params.id, req.body);
       return reply.send({ status: true, data: result });
@@ -57,7 +57,7 @@ export default async function itemRoutes(app, options) {
     }
   });
 
-  app.delete('/:id',deleteItemSchema,async (req, reply) => {
+  app.delete('/:id', { preHandler: verifyToken, ...deleteItemSchema }, async (req, reply) => {
     try {
       await service.deleteItem(req.params.id);
       return reply.send({status: true,message: "Deleted successfully"});
