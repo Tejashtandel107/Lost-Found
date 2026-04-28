@@ -34,6 +34,7 @@ export default class AuthService {
       email: user.email,
       enrollmentNo: user.enrollmentNo,
       contactNumber: user.contactNumber,
+      id: user._id,
       token
     };
   }
@@ -59,6 +60,7 @@ export default class AuthService {
       email: user.email,
       enrollmentNo: user.enrollmentNo,
       contactNumber: user.contactNumber,
+      id: user._id,
       token
     };
   }
