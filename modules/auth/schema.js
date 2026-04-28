@@ -56,7 +56,8 @@ export const registerSchema = {
               enrollmentNo: { type: 'string' },
               contactNumber: { type: 'string' },
               branch: { type: 'string' },
-              token: { type: 'string' } 
+              token: { type: 'string' },
+              id: { type: 'string' }
             }
           }
         }
@@ -94,7 +95,8 @@ export const loginSchema = {
               enrollmentNo: { type: 'string' },
               contactNumber: { type: 'string' },
               branch: { type: 'string' },
-              token: { type: 'string' } 
+              token: { type: 'string' },
+              id: { type: 'string' }
             }
           }
         }
