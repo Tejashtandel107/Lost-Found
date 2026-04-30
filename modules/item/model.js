@@ -52,6 +52,12 @@ const itemSchema = new mongoose.Schema(
       required: true 
     },
 
+    userId:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    },
+
     find:{
       type:Boolean,
       default:false

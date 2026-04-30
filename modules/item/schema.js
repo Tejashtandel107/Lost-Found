@@ -12,7 +12,8 @@ export const reportItemSchema = {
         'name',
         'contactNumber',
         'email',
-        'image'
+        'image',
+        'userId'
       ],
       properties: {
         type: {
@@ -49,6 +50,10 @@ export const reportItemSchema = {
         },
         image: {
           type: 'string'
+        },
+        userId: {
+          type: 'string',
+          pattern: '^[0-9a-fA-F]{24}$'
         }
       }
     }
