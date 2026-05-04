@@ -1,5 +1,6 @@
 import ContactService from "./service.js";
 import { contactSchema } from "./schema.js";
+import { verifyToken } from '../../middleware/auth.js';
 
 const service = new ContactService();
 
@@ -23,7 +24,7 @@ async function contactRoutes(app, options) {
     }
   });
 
-  app.get("/", async (req, reply) => {
+  app.get("/", { preHandler: verifyToken }, async (req, reply) => {
     try {
       const data = await service.getAllContacts();
       reply.send({status: true,data});
