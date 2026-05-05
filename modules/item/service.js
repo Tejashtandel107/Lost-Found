@@ -60,7 +60,7 @@ export default class ItemService {
     const [items, total] = await Promise.all([
       Item.find(filter)
         .populate('reportedBy', 'name email contactNumber')
-        .sort({ dateFound: -1 })
+        .sort({ createdAt: -1 })
         .skip(skip)
         .limit(parseInt(limit)),
       Item.countDocuments(filter)
