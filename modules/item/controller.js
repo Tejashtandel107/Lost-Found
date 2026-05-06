@@ -33,6 +33,24 @@ export default async function itemRoutes(app, options) {
     }
   });
 
+  app.get('/dashboard/:userId', async (req, reply) => {
+    try {
+      const result = await service.dashboard(req.params.userId);
+      reply.send({ status: true, data: result });
+    } catch (err) {
+      reply.code(400).send({ status: false, message: err.message });
+    }
+  });
+
+  app.get('/dashboard-stats', async (req, reply) => {
+    try {
+      const result = await service.getDashboardStats();
+      reply.send({ status: true, data: result });
+    } catch (err) {
+      reply.code(400).send({ status: false, message: err.message });
+    }
+  });
+
   app.get('/:id',getItemByIdSchema,async (req, reply) => {
     try {
       const result = await service.getItemById(req.params.id);

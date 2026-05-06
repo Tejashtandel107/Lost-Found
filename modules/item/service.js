@@ -1,4 +1,5 @@
 import Item from './model.js';
+import User from '../auth/model.js';
 
 export default class ItemService {
   async createItem(body) {
@@ -74,6 +75,43 @@ export default class ItemService {
         limit: parseInt(limit),
         totalPages: Math.ceil(total / limit)
       }
+    };
+  }
+
+  async dashboard(userId, page = 1, limit = 10) {
+    const skip = (page - 1) * limit;
+
+    const [items, total] = await Promise.all([
+      Item.find({ userId })
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit),
+
+      Item.countDocuments({ userId })
+    ]);
+
+    return {
+      items,
+      pagination: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      }
+    };
+  }
+
+  async getDashboardStats() {
+    const [totalItems, claimedItems, totalUsers] = await Promise.all([
+      Item.countDocuments(),
+      Item.countDocuments({ type: 'claim' }),
+      User.countDocuments()
+    ]);
+
+    return {
+      totalItems,
+      claimedItems,
+      totalUsers
     };
   }
   
