@@ -1,3 +1,4 @@
+import path from "path";
 import imagekit from "../../config/imagekit.js";
 
 export default async function uploadRoutes(app, options) {
@@ -9,21 +10,30 @@ export default async function uploadRoutes(app, options) {
         throw new Error("No file uploaded");
       }
 
-      // Allow all image types
+      console.log("Mimetype:", data.mimetype);
+
+      // Allow only images
       if (!data.mimetype.startsWith("image/")) {
         throw new Error("Only image files are allowed");
       }
 
       const buffer = await data.toBuffer();
 
-      // Important for webp support
-      const base64File = `data:${data.mimetype};base64,${buffer.toString(
+      // Keep original extension
+      const ext = path.extname(data.filename);
+
+      // Proper filename
+      const fileName = `${Date.now()}${ext}`;
+
+      // Convert buffer to base64 with mime type
+      const file = `data:${data.mimetype};base64,${buffer.toString(
         "base64"
       )}`;
 
       const result = await imagekit.files.upload({
-        file: base64File,
-        fileName: `${Date.now()}-${data.filename}`,
+        file,
+        fileName,
+        useUniqueFileName: false,
       });
 
       return reply.send({
